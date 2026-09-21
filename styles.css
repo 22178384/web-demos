@@ -1,0 +1,22 @@
+/* 由 @c991china 贡献：让计数器页面更美观 */
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+.card {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 2rem 3rem;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}
+#count {
+  font-size: 3rem;
+  font-weight: 700;
+}
+button {
+  background: #fff;
+  color: #764ba2;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
