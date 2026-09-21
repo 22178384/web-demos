@@ -1,7 +1,12 @@
 # web-demos
 
-本仓库为个人原创整理，持续更新。
+> 一些无需构建、打开即用的小网页 demo。
 
-## 说明
-- 内容均为原创，仅供学习与交流。
-- 欢迎提 issue / PR。
+## 文件
+- [index.html](index.html)：带计数器的单页 demo（配合 [app.js](app.js)）
+
+## 运行
+直接用浏览器打开 `index.html` 即可。
+
+## 生态联动
+- 网页片段思路 → [@22178384/snippet-box](https://github.com/22178384/snippet-box)
