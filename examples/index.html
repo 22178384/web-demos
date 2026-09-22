@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>web-demos</title>
+  <link rel="stylesheet" href="../styles/base.css">
+</head>
+<body>
+  <h1>web-demos</h1>
+  <p class="muted">
+    Three vanilla JS components. No framework, no build step. Open these files
+    directly from disk and they work.
+  </p>
+
+  <div class="stack">
+    <div>
+      <h2>Demos</h2>
+      <ul>
+        <li><a href="modal-demo.html">modal-demo.html</a> &mdash; dialog with focus trap</li>
+        <li><a href="tabs-demo.html">tabs-demo.html</a> &mdash; ARIA tablist, keyboard nav</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Toast (inline, since it's the simplest one)</h2>
+      <p class="muted">Hover a toast to pause its timer. <kbd>Esc</kbd> does nothing here, click the &times;.</p>
+      <div class="row">
+        <button class="btn btn--primary" data-toast="info">info</button>
+        <button class="btn" data-toast="success">success</button>
+        <button class="btn" data-toast="warn">warn</button>
+        <button class="btn" data-toast="error">error</button>
+        <button class="btn" id="sticky">sticky (duration 0)</button>
+        <button class="btn" id="clear">clear all</button>
+      </div>
+    </div>
+
+    <div>
+      <h2>API in one line each</h2>
+      <pre><code>new DemoModal('#my-modal').open();
+
+new DemoTabs('#my-tabs', { activate: 0 });
+
+DemoToast.show('Saved', { type: 'success', duration: 3000 });</code></pre>
+    </div>
+  </div>
+
+  <script src="../components/toast.js"></script>
+  <script>
+    (function () {
+      var messages = {
+        info: 'Heads up, this is an info toast.',
+        success: 'Saved. 3 rows written.',
+        warn: 'Retrying in 5s. This is the 2nd attempt.',
+        error: 'Upload failed: 413 Payload Too Large.'
+      };
+
+      document.querySelectorAll('[data-toast]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var type = btn.getAttribute('data-toast');
+          DemoToast.show(messages[type], { type: type });
+        });
+      });
+
+      document.getElementById('sticky').addEventListener('click', function () {
+        DemoToast.show('This one stays until you close it.', { duration: 0 });
+      });
+
+      document.getElementById('clear').addEventListener('click', function () {
+        DemoToast.clear();
+      });
+    })();
+  </script>
+</body>
+</html>
