@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tabs demo</title>
+  <link rel="stylesheet" href="../styles/base.css">
+</head>
+<body>
+  <h1>Tabs</h1>
+  <p class="muted">
+    Click a tab, or focus one and use the arrow keys. <kbd>Home</kbd> and
+    <kbd>End</kbd> jump to the ends. Selected panel is the only one not hidden.
+  </p>
+
+  <div class="tabs" id="demo-tabs">
+    <div class="tabs__list" role="tablist" aria-label="Example tabs">
+      <button role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+      <button role="tab" id="tab-install" aria-controls="panel-install">Install</button>
+      <button role="tab" id="tab-api" aria-controls="panel-api">API</button>
+      <button role="tab" id="tab-gotchas" aria-controls="panel-gotchas">Gotchas</button>
+    </div>
+
+    <div role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" tabindex="0">
+      <p>
+        Panels are plain divs. The component only toggles the <code>hidden</code>
+        attribute and the <code>aria-selected</code> / <code>tabindex</code> on
+        the tabs. Style them however you like.
+      </p>
+    </div>
+
+    <div role="tabpanel" id="panel-install" aria-labelledby="tab-install" tabindex="0" hidden>
+      <p>Drop the script in and construct it with a selector:</p>
+      <pre><code>new DemoTabs('#demo-tabs', { activate: 0 });</code></pre>
+    </div>
+
+    <div role="tabpanel" id="panel-api" aria-labelledby="tab-api" tabindex="0" hidden>
+      <ul>
+        <li><code>select(index)</code> &mdash; 0-based</li>
+        <li><code>selectById(tabElementId)</code> &mdash; handy for deep links</li>
+        <li>event <code>tabs:change</code> with <code>detail.index</code>, <code>.panel</code>, <code>.previous</code></li>
+        <li>option <code>orientation: 'vertical'</code> switches the arrow keys to Up/Down</li>
+      </ul>
+    </div>
+
+    <div role="tabpanel" id="panel-gotchas" aria-labelledby="tab-gotchas" tabindex="0" hidden>
+      <p>
+        Every tab needs a matching panel via <code>aria-controls</code>. If one
+        is missing the constructor throws instead of failing silently. I'd
+        rather find out immediately.
+      </p>
+    </div>
+  </div>
+
+  <p class="muted" id="log">waiting for a change&hellip;</p>
+
+  <div class="row">
+    <button class="btn" id="goto-api">Jump to API tab</button>
+    <button class="btn" id="goto-gotchas">Jump to Gotchas tab</button>
+  </div>
+
+  <script src="../components/tabs.js"></script>
+  <script>
+    (function () {
+      var log = document.getElementById('log');
+
+      var tabs = new DemoTabs('#demo-tabs', { activate: 0 });
+
+      tabs.root.addEventListener('tabs:change', function (e) {
+        log.textContent = 'changed to "' + e.detail.tab.textContent +
+          '" (was index ' + e.detail.previous + ')';
+      });
+
+      document.getElementById('goto-api').addEventListener('click', function () {
+        tabs.selectById('tab-api');
+        document.getElementById('tab-api').focus();
+      });
+      document.getElementById('goto-gotchas').addEventListener('click', function () {
+        tabs.selectById('tab-gotchas');
+        document.getElementById('tab-gotchas').focus();
+      });
+    })();
+  </script>
+</body>
+</html>
